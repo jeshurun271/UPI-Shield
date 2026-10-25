@@ -1,0 +1,604 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Geist Variable', sans-serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+  @keyframes mo-spin {
+  to {
+    --angle: 360deg;
+        }
+    }
+  @keyframes mo-drift {
+  from {
+    transform: translateX(-14%);
+        }
+  to {
+    transform: translateX(14%);
+        }
+    }
+  @keyframes mo-shimmer {
+  from {
+    background-position: 150% 0;
+        }
+  to {
+    background-position: -100% 0;
+        }
+    }
+  @keyframes mo-dot {
+  0%, 80%, 100% {
+    opacity: .25;
+        }
+  40% {
+    opacity: 1;
+        }
+    }
+  @keyframes mo-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+        }
+  to {
+    opacity: 1;
+    transform: none;
+        }
+    }
+  @keyframes mo-out {
+  from {
+    opacity: 1;
+    transform: none;
+        }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+        }
+    }
+  @keyframes mo-fade-in {
+  from {
+    opacity: 0;
+        }
+  to {
+    opacity: 1;
+        }
+    }
+  @keyframes mo-fade-out {
+  from {
+    opacity: 1;
+        }
+  to {
+    opacity: 0;
+        }
+    }
+  @keyframes mo-shake {
+  0%, 100% {
+    transform: translate(-50%, -50%);
+        }
+  25% {
+    transform: translate(calc(-50% - 4px), -50%);
+        }
+  75% {
+    transform: translate(calc(-50% + 4px), -50%);
+        }
+    }
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  html {
+    @apply font-sans;
+    }
+}
+/* ===== MORPH ORB: REACTIVE NEON INPUT ===== */
+
+@keyframes mo-input-light-sweep {
+  0% {
+    background-position: 180% 50%;
+  }
+  100% {
+    background-position: -180% 50%;
+  }
+}
+
+@keyframes mo-input-glow-pulse {
+  0%, 100% {
+    opacity: 0.22;
+    transform: scale(0.995);
+  }
+  50% {
+    opacity: 0.52;
+    transform: scale(1.012);
+  }
+}
+
+/* Keep the component layout and add a subtle neon edge */
+.mo-input {
+  isolation: isolate;
+  overflow: visible;
+  border: 1px solid rgba(103, 232, 249, 0.3);
+  box-shadow:
+    0 0 0 1px rgba(96, 165, 250, 0.08),
+    0 8px 32px rgba(59, 130, 246, 0.12);
+  transition:
+    border-color 250ms ease,
+    box-shadow 250ms ease,
+    filter 250ms ease;
+}
+
+/* Animated coloured light travels around the bar's edge */
+.mo-input::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  pointer-events: none;
+  z-index: 0;
+
+  background: linear-gradient(
+    110deg,
+    transparent 5%,
+    #22d3ee 22%,
+    #60a5fa 38%,
+    #a78bfa 52%,
+    #f0abfc 65%,
+    #38bdf8 80%,
+    transparent 96%
+  );
+
+  background-size: 300% 100%;
+  animation: mo-input-light-sweep 4s linear infinite;
+  opacity: 0.7;
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Soft coloured aura behind the typing bar */
+.mo-input::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+
+  background: linear-gradient(
+    100deg,
+    #22d3ee,
+    #6366f1,
+    #d946ef,
+    #38bdf8
+  );
+
+  background-size: 300% 100%;
+  animation:
+    mo-input-light-sweep 6s linear infinite,
+    mo-input-glow-pulse 3s ease-in-out infinite;
+
+  filter: blur(15px);
+  opacity: 0.3;
+}
+
+/* Keep the input, icon and send button above the lighting */
+.mo-input > * {
+  z-index: 1;
+}
+
+/* Lights intensify on mouse hover */
+.mo-input:hover::before {
+  opacity: 0.95;
+  animation-duration: 2s;
+}
+
+.mo-input:hover::after {
+  opacity: 0.55;
+}
+
+/* Stronger glow when the typing bar has focus */
+.mo-input:focus-within {
+  border-color: rgba(103, 232, 249, 0.75);
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.18),
+    0 0 22px rgba(34, 211, 238, 0.18),
+    0 0 42px rgba(99, 102, 241, 0.16);
+}
+
+.mo-input:focus-within::before {
+  opacity: 1;
+  animation-duration: 1.5s;
+}
+
+.mo-input:focus-within::after {
+  opacity: 0.7;
+  filter: blur(19px);
+}
+
+.mo-input:focus-within .mo-field {
+  caret-color: #67e8f9;
+}
+
+/* React to actual typing: accelerate the light sweep */
+.mo-actor[data-typing] .mo-input::before {
+  opacity: 1;
+  animation-duration: 0.85s;
+}
+
+.mo-actor[data-typing] .mo-input::after {
+  opacity: 0.8;
+}
+
+/* Make the send icon glow when text is ready */
+.mo-input .mo-send[data-ready] {
+  filter: drop-shadow(0 0 7px rgba(34, 211, 238, 0.7));
+  transition: filter 200ms ease;
+}
+
+.mo-input .mo-send[data-ready]:hover {
+  filter: drop-shadow(0 0 12px rgba(167, 139, 250, 0.95));
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .mo-input::before,
+  .mo-input::after {
+    animation: none;
+  }
+}
+
+/* FIX: Make typed text clearly visible */
+.mo-input .mo-field {
+  position: relative !important;
+  z-index: 5 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #67e8f9 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: transparent !important;
+  font-size: 16px !important;
+}
+
+.mo-input .mo-field::placeholder {
+  color: rgba(220, 230, 255, 0.65) !important;
+  -webkit-text-fill-color: rgba(220, 230, 255, 0.65) !important;
+  opacity: 1 !important;
+}
+
+/* Keep the input above the animated neon border */
+.mo-input .mo-send {
+  position: relative;
+  z-index: 5 !important;
+}
+
+/* Remove the Gemini-like sparkle logo */
+.mo-input .mo-spark {
+  display: none !important;
+}
+
+/* ===== FIXED BOTTOM CHATBOT ===== */
+
+.mo-mover {
+  position: fixed !important;
+  top: auto !important;
+  bottom: 70px !important;
+  left: 50% !important;
+  right: auto !important;
+
+  /* Prevent JavaScript from moving the chatbot */
+  transform: translateX(-50%) !important;
+
+  width: min(560px, calc(100vw - 24px)) !important;
+  max-width: calc(100vw - 24px) !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Keep the component within the screen */
+.mo-root {
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+/* Make the animated input fit its container */
+.mo-actor {
+  max-width: calc(100vw - 24px) !important;
+  box-sizing: border-box !important;
+}
+
+.mo-input {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Prevent the text field from overflowing */
+.mo-input .mo-field {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Keep the send button inside the input bar */
+.mo-input .mo-send {
+  flex: 0 0 40px;
+  min-width: 40px;
+  box-sizing: border-box;
+}
+
+/* Adjust spacing on narrow screens */
+@media (max-width: 480px) {
+  .mo-mover {
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    bottom: 64px !important;
+  }
+
+  .mo-actor {
+    max-width: calc(100vw - 24px) !important;
+  }
+
+  .mo-input .mo-field {
+    font-size: 15px !important;
+  }
+}
+
+/* Remove unwanted demo labels and placeholder messages */
+.mo-status,
+.mo-reset,
+.mo-live,
+.mo-answer {
+  display: none !important;
+}
+
+/* Keep the chatbot interface clean */
+.mo-root {
+  overflow: visible;
+}
+
+.mo-mover {
+  pointer-events: auto;
+}
+
+/* Hide any accidental text-selection highlighting */
+::selection {
+  background: rgba(34, 211, 238, 0.25);
+  color: #ffffff;
+}
+
+/* FIX: Keep the chatbot input perfectly sharp */
+.mo-input {
+  filter: none !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+}
+
+.mo-input .mo-field {
+  filter: none !important;
+  opacity: 1 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.mo-input .mo-field::placeholder {
+  color: rgba(220, 230, 255, 0.75) !important;
+  -webkit-text-fill-color: rgba(220, 230, 255, 0.75) !important;
+  opacity: 1 !important;
+}
+
+/* Keep the colourful glow outside the input, not over its text */
+.mo-input::after {
+  pointer-events: none !important;
+}
+
+/* Keep the input above decorative effects */
+.mo-input .mo-field,
+.mo-input .mo-send {
+  position: relative;
+  z-index: 5 !important;
+}
+
+/* ===== COMPACT, CLICKABLE CHAT INPUT ===== */
+
+.mo-mover {
+  position: fixed !important;
+  top: auto !important;
+  bottom: 24px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+
+  width: min(430px, calc(100vw - 24px)) !important;
+  max-width: calc(100vw - 24px) !important;
+}
+
+.mo-actor {
+  width: min(430px, calc(100vw - 24px)) !important;
+  max-width: calc(100vw - 24px) !important;
+  box-sizing: border-box !important;
+}
+
+/* Keep the input and its text interactive */
+.mo-input {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  pointer-events: auto !important;
+  filter: none !important;
+}
+
+.mo-input .mo-field {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  pointer-events: auto !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #67e8f9 !important;
+  filter: none !important;
+}
+
+.mo-input .mo-send {
+  flex: 0 0 36px !important;
+  min-width: 36px !important;
+  pointer-events: auto !important;
+}
+
+/* Decorative layers must not intercept clicks */
+.mo-input::before,
+.mo-input::after,
+.mo-bg,
+.mo-halo {
+  pointer-events: none !important;
+}
+
+@media (max-width: 480px) {
+  .mo-mover,
+  .mo-actor {
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+  }
+}
+/* Aurora Background animation — Tailwind CSS v4 */
+
+@theme inline {
+  --animate-aurora: aurora 60s linear infinite;
+
+  @keyframes aurora {
+    from {
+      background-position:
+        50% 50%,
+        50% 50%;
+    }
+
+    to {
+      background-position:
+        350% 50%,
+        350% 50%;
+    }
+  }
+}

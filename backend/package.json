@@ -1,0 +1,16 @@
+{
+  "name": "upi-shield",
+  "version": "1.0.0",
+  "description": "UPI Shield - AI powered digital payment scam detection",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.3",
+    "openai": "^4.77.0"
+  }
+}
