@@ -3,142 +3,119 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const OpenAI = require("openai");
+const { GoogleGenAI } = require("@google/genai");
 
 const app = express();
-
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 
-const openai = process.env.OPENAI_API_KEY
-    ? new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY
-    })
-    : null;
-
 const frontendPath = path.join(__dirname, "..", "frontend");
-
 app.use(express.static(frontendPath));
 
-function localAnalyse(message) {
-    const text = String(message || "").toLowerCase();
-    const signals = [];
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const ai = GEMINI_API_KEY
+    ? new GoogleGenAI({ apiKey: GEMINI_API_KEY })
+    : null;
 
-    function addSignal(name, explanation) {
-        signals.push({
-            name,
-            explanation
-        });
-    }
+const SYSTEM_PROMPT = `
+You are UPI Shield, a friendly Indian UPI safety chatbot for students and families.
 
-    if (/urgent|immediately|now|today|within|expires|last chance/.test(text)) {
-        addSignal(
-            "URGENCY",
-            "The message creates pressure to act quickly instead of giving you time to independently verify the request."
-        );
-    }
+Your job has TWO modes.
 
-    if (/otp|one[- ]time password|verification code/.test(text)) {
-        addSignal(
-            "OTP REQUEST",
-            "Legitimate organisations should not ask you to disclose an OTP to another person."
-        );
-    }
+MODE 1 — NORMAL CHAT
 
-    if (/upi pin|pin|cvv|password|credentials|account details/.test(text)) {
-        addSignal(
-            "CREDENTIAL REQUEST",
-            "The message appears to request sensitive financial or authentication information."
-        );
-    }
+If the user says things like:
+- hi
+- hello
+- hey
+- good morning
+- what can you do?
+- who are you?
+- help
+- thanks
+- bye
 
-    if (/kyc|blocked|suspended|freeze|account will be/.test(text)) {
-        addSignal(
-            "KYC PRESSURE",
-            "The message uses account suspension or KYC pressure to make the recipient act without verification."
-        );
-    }
+Respond naturally and conversationally.
 
-    if (/cashback|reward|prize|winner|won|refund/.test(text)) {
-        addSignal(
-            "FINANCIAL INCENTIVE",
-            "Unexpected rewards or refunds are commonly used to persuade people to interact with fraudulent payment flows."
-        );
-    }
+Do NOT calculate a risk score for normal conversation.
 
-    if (/http:\/\/|https:\/\/|www\.|\.com|\.in\/|bit\.ly|tinyurl/.test(text)) {
-        addSignal(
-            "SUSPICIOUS LINK",
-            "The message contains a link. Unexpected links should be independently verified before opening."
-        );
-    }
+For example, if the user says "Hi", respond approximately:
+"Hi! 👋 I'm UPI Shield. I can help you check suspicious UPI messages, payment requests, OTP requests and possible scams. Just tell me what happened — don't share any real OTP, PIN, password or bank details."
 
-    if (/approve|collect request|payment request|pay|send money|transfer/.test(text)) {
-        addSignal(
-            "PAYMENT PRESSURE",
-            "The message appears to encourage a payment or payment approval."
-        );
-    }
+MODE 2 — SCAM / PAYMENT SAFETY
 
-    let score = Math.min(98, 18 + signals.length * 12);
+If the user describes a suspicious SMS, WhatsApp message, phone call, UPI payment request, KYC request, OTP request, refund, cashback, prize, account-blocking threat, suspicious link, payment request or anything related to possible digital-payment fraud:
 
-    if (/otp|upi pin|cvv|password/.test(text)) {
-        score += 12;
-    }
+Analyse it.
 
-    score = Math.min(score, 99);
+ONLY in this mode provide:
+VERDICT
+RISK SCORE
+WHY IT LOOKS SUSPICIOUS
+RED FLAGS
+WHAT TO DO
 
-    let verdict = "LOWER RISK";
+Use:
+0-29 = LOWER RISK
+30-49 = CAUTION
+50-74 = HIGH RISK
+75-100 = SCAM
 
-    if (score >= 75) {
-        verdict = "SCAM";
-    } else if (score >= 50) {
-        verdict = "HIGH RISK";
-    } else if (score >= 30) {
-        verdict = "CAUTION";
-    }
+Look for:
+- urgency
+- impersonation
+- fake KYC
+- OTP requests
+- UPI PIN requests
+- CVV/password requests
+- suspicious links
+- payment approval pressure
+- collect requests
+- fake refunds
+- fake cashback
+- fake prizes
+- account blocking threats
+- credential requests
+- remote-access app requests
 
-    const explanation = signals.length
-        ? `Shield detected ${signals.length} behavioural signal${signals.length === 1 ? "" : "s"} associated with potentially unsafe payment communication.`
-        : "No major scam indicators were detected in the supplied message. This does not guarantee that the message is genuine.";
+IMPORTANT:
+Never ask for or request the user's real:
+- OTP
+- UPI PIN
+- password
+- CVV
+- card number
+- bank account number
 
-    let action;
+Always include this safety reminder when discussing a possible scam:
+"Never type your real PIN or OTP here."
 
-    if (score >= 75) {
-        action =
-            "Do not click the link, approve the payment or share any OTP/UPI PIN. Verify directly through your bank's official app or website.";
-    } else if (score >= 50) {
-        action =
-            "Pause before acting. Independently verify the sender and request through an official channel.";
-    } else {
-        action =
-            "No strong scam pattern was detected. Continue to verify unexpected payment requests independently.";
-    }
+If fraud or money loss is suspected, advise:
+"Call 1930 or report at cybercrime.gov.in."
 
-    return {
-        risk_score: score,
-        verdict,
-        explanation,
-        why: explanation,
-        recommended_action: action,
-        signals
-    };
-}
+Keep answers understandable for a school student.
 
+Do not sound robotic.
+
+Do not calculate a risk score for greetings or ordinary questions.
+`;
 
 app.get("/api/health", (req, res) => {
     res.json({
         ok: true,
         service: "UPI Shield",
-        ai_configured: Boolean(process.env.OPENAI_API_KEY)
+        ai_configured: Boolean(GEMINI_API_KEY),
+        ai_provider: "Google Gemini"
     });
 });
 
-
-app.post("/api/upi-analyze", async (req, res) => {
+app.post("/api/chat", async (req, res) => {
     const message = String(req.body?.message || "").trim();
+    const history = Array.isArray(req.body?.history)
+        ? req.body.history.slice(-10)
+        : [];
 
     if (!message) {
         return res.status(400).json({
@@ -146,112 +123,62 @@ app.post("/api/upi-analyze", async (req, res) => {
         });
     }
 
-    /*
-     * AI analysis
-     */
-    if (openai) {
-        try {
-            const response = await openai.chat.completions.create({
-                model: "gpt-4o-mini",
-                temperature: 0.1,
-                response_format: {
-                    type: "json_object"
-                },
-                messages: [
-                    {
-                        role: "system",
-                        content: `
-You are UPI Shield, an Indian digital-payment scam detection assistant.
-
-Analyse suspicious SMS, WhatsApp messages, payment requests and scam messages.
-
-Return ONLY valid JSON using this structure:
-
-{
-  "risk_score": 0,
-  "verdict": "SCAM",
-  "explanation": "short explanation",
-  "why": "specific reasons",
-  "recommended_action": "what the user should do",
-  "signals": [
-    {
-      "name": "SIGNAL NAME",
-      "explanation": "why this signal matters"
+    if (!ai) {
+        return res.status(500).json({
+            error: "Gemini AI is not configured."
+        });
     }
-  ]
-}
 
-Risk score:
-0-29 = LOWER RISK
-30-49 = CAUTION
-50-74 = HIGH RISK
-75-100 = SCAM
+    try {
+        const conversation = history
+            .map(item => {
+                const role = item.role === "model" ? "Assistant" : "User";
+                return `${role}: ${String(item.text || "")}`;
+            })
+            .join("\n");
 
-Look especially for:
-- urgency
-- impersonation
-- fake KYC
-- OTP requests
-- UPI PIN requests
-- suspicious links
-- payment approval pressure
-- fake refunds
-- fake cashback
-- account blocking threats
-- credential requests
+        const prompt = `
+Previous conversation:
+${conversation || "(none)"}
 
-Never tell the user to share OTP, UPI PIN, CVV or passwords.
-`
-                    },
-                    {
-                        role: "user",
-                        content: message
-                    }
-                ]
-            });
+User's latest message:
+${message}
 
-            const content =
-                response.choices?.[0]?.message?.content;
+Respond to the user's latest message as UPI Shield.
+`;
 
-            if (content) {
-                let result;
-
-                try {
-                    result = JSON.parse(content);
-                } catch {
-                    result = null;
-                }
-
-                if (result) {
-                    return res.json({
-                        result
-                    });
-                }
+        const response = await ai.models.generateContent({
+            model: "gemini-3.5-flash-lite",
+            contents: prompt,
+            config: {
+                systemInstruction: SYSTEM_PROMPT,
             }
-        } catch (error) {
-            console.error(
-                "OpenAI analysis failed:",
-                error?.message || error
-            );
+        });
+
+        const reply = response.text?.trim();
+
+        if (!reply) {
+            throw new Error("Gemini returned an empty response.");
         }
+
+        return res.json({
+            reply,
+            fallback: false,
+            ai_provider: "Google Gemini"
+        });
+
+    } catch (error) {
+        console.error("Gemini chat failed:", error?.message || error);
+
+        return res.status(500).json({
+            error: "The AI could not respond right now."
+        });
     }
-
-    /*
-     * Local fallback
-     */
-    return res.json({
-        result: localAnalyse(message),
-        fallback: true
-    });
 });
-
 
 app.get("*", (req, res) => {
-    res.sendFile(
-        path.join(frontendPath, "index.html")
-    );
+    res.sendFile(path.join(frontendPath, "index.html"));
 });
-
 
 app.listen(PORT, "127.0.0.1", () => {
     console.log("");
@@ -259,12 +186,10 @@ app.listen(PORT, "127.0.0.1", () => {
     console.log("          UPI SHIELD");
     console.log("========================================");
     console.log("");
-    console.log(`UPI Shield is running locally.`);
+    console.log("Real conversational AI: Google Gemini");
     console.log(`Open http://localhost:${PORT}`);
-    console.log(
-        `AI key configured: ${Boolean(process.env.OPENAI_API_KEY)}`
-    );
-    console.log("");
-    console.log("Keep this terminal open while using the app.");
+    console.log(`AI key configured: ${Boolean(GEMINI_API_KEY)}`);
     console.log("");
 });
+
+

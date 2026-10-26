@@ -607,19 +607,211 @@
   .mo-ring, .mo-aurora, .mo-lab-t, .mo-dots i { animation: none; }
 }
 
-/* Original Morph Orb positioning fix */
+/* FINAL INPUT VISIBILITY + CLICK FIX */
 .mo-actor {
-  position: absolute;
+  position: relative !important;
+  isolation: isolate !important;
 }
 
+.mo-surface {
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
 
-/* Restore original Morph Orb input containment */
-.mo-actor {
-  position: absolute !important;
+.mo-orb,
+.mo-pulse,
+.mo-underglow,
+.mo-halo-green,
+.mo-aurora {
+  pointer-events: none !important;
 }
 
 .mo-input {
   position: absolute !important;
   inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  z-index: 100 !important;
 }
 
+.mo-input .mo-field {
+  position: relative !important;
+  z-index: 101 !important;
+  display: block !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  width: auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+
+.mo-input .mo-field::placeholder {
+  color: rgba(225, 224, 204, 0.55) !important;
+  -webkit-text-fill-color: rgba(225, 224, 204, 0.55) !important;
+  opacity: 1 !important;
+}
+
+.mo-input .mo-send {
+  position: relative !important;
+  z-index: 101 !important;
+  pointer-events: auto !important;
+  flex: 0 0 44px !important;
+}
+
+
+/* FINAL INPUT VISIBILITY + CLICK FIX */
+.mo-actor {
+  position: relative !important;
+  isolation: isolate !important;
+}
+
+.mo-surface {
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+.mo-orb,
+.mo-pulse,
+.mo-underglow,
+.mo-halo-green,
+.mo-aurora {
+  pointer-events: none !important;
+}
+
+.mo-input {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  z-index: 100 !important;
+}
+
+.mo-input .mo-field {
+  position: relative !important;
+  z-index: 101 !important;
+  display: block !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  width: auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+
+.mo-input .mo-field::placeholder {
+  color: rgba(225, 224, 204, 0.55) !important;
+  -webkit-text-fill-color: rgba(225, 224, 204, 0.55) !important;
+  opacity: 1 !important;
+}
+
+.mo-input .mo-send {
+  position: relative !important;
+  z-index: 101 !important;
+  pointer-events: auto !important;
+  flex: 0 0 44px !important;
+}
+
+ 
+/* =========================================================
+   UPI SHIELD � CINEMATIC SCROLL
+   Does not modify the chat UI
+========================================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 20px;
+}
+
+section:not(#chat) {
+  animation: upiSectionReveal linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 35%;
+}
+
+@keyframes upiSectionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(90px) scale(0.97);
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Poster gets a slightly more cinematic entrance */
+#poster {
+  animation-range: entry 0% cover 30%;
+}
+
+/* Keep the chat exactly as designed */
+#chat {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+\n\n
+/* UPI SHIELD CINEMATIC SCROLL */
+
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 20px;
+}
+
+section:not(#chat) {
+  animation: upiCinematicReveal linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 35%;
+}
+
+@keyframes upiCinematicReveal {
+  from {
+    opacity: 0;
+    transform: translateY(90px) scale(0.97);
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+#chat {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+#poster {
+  animation-range: entry 0% cover 30%;
+}
