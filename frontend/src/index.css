@@ -1,604 +1,625 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
 
-@custom-variant dark (&:is(.dark *));
+/* Prisma palette: cream (#E1E0CC) on black. `primary` is the cream, so the
+   hero's `text-primary/70` and `bg-primary` resolve exactly as on 21st.dev. */
+:root {
+  --background: #000000;
+  --foreground: #e1e0cc;
+  --primary: #e1e0cc;
+  --primary-foreground: #000000;
+  --card: #0c0c0b;
+  --card-foreground: #e1e0cc;
+  --muted: #161614;
+  --muted-foreground: rgba(225, 224, 204, 0.55);
+  --border: rgba(225, 224, 204, 0.12);
+  --ring: #e1e0cc;
+  --ember: #f0a36b;
+  --radius: 1rem;
+}
 
 @theme inline {
-    --font-heading: var(--font-sans);
-    --font-sans: 'Geist Variable', sans-serif;
-    --color-sidebar-ring: var(--sidebar-ring);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar: var(--sidebar);
-    --color-chart-5: var(--chart-5);
-    --color-chart-4: var(--chart-4);
-    --color-chart-3: var(--chart-3);
-    --color-chart-2: var(--chart-2);
-    --color-chart-1: var(--chart-1);
-    --color-ring: var(--ring);
-    --color-input: var(--input);
-    --color-border: var(--border);
-    --color-destructive: var(--destructive);
-    --color-accent-foreground: var(--accent-foreground);
-    --color-accent: var(--accent);
-    --color-muted-foreground: var(--muted-foreground);
-    --color-muted: var(--muted);
-    --color-secondary-foreground: var(--secondary-foreground);
-    --color-secondary: var(--secondary);
-    --color-primary-foreground: var(--primary-foreground);
-    --color-primary: var(--primary);
-    --color-popover-foreground: var(--popover-foreground);
-    --color-popover: var(--popover);
-    --color-card-foreground: var(--card-foreground);
-    --color-card: var(--card);
-    --color-foreground: var(--foreground);
-    --color-background: var(--background);
-    --radius-sm: calc(var(--radius) * 0.6);
-    --radius-md: calc(var(--radius) * 0.8);
-    --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) * 1.4);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
-  @keyframes mo-spin {
-  to {
-    --angle: 360deg;
-        }
-    }
-  @keyframes mo-drift {
-  from {
-    transform: translateX(-14%);
-        }
-  to {
-    transform: translateX(14%);
-        }
-    }
-  @keyframes mo-shimmer {
-  from {
-    background-position: 150% 0;
-        }
-  to {
-    background-position: -100% 0;
-        }
-    }
-  @keyframes mo-dot {
-  0%, 80%, 100% {
-    opacity: .25;
-        }
-  40% {
-    opacity: 1;
-        }
-    }
-  @keyframes mo-in {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-        }
-  to {
-    opacity: 1;
-    transform: none;
-        }
-    }
-  @keyframes mo-out {
-  from {
-    opacity: 1;
-    transform: none;
-        }
-  to {
-    opacity: 0;
-    transform: translateY(-6px);
-        }
-    }
-  @keyframes mo-fade-in {
-  from {
-    opacity: 0;
-        }
-  to {
-    opacity: 1;
-        }
-    }
-  @keyframes mo-fade-out {
-  from {
-    opacity: 1;
-        }
-  to {
-    opacity: 0;
-        }
-    }
-  @keyframes mo-shake {
-  0%, 100% {
-    transform: translate(-50%, -50%);
-        }
-  25% {
-    transform: translate(calc(-50% - 4px), -50%);
-        }
-  75% {
-    transform: translate(calc(-50% + 4px), -50%);
-        }
-    }
-}
-
-:root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-ember: var(--ember);
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --ease-prisma: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-    }
-  body {
-    @apply bg-background text-foreground;
-    }
   html {
-    @apply font-sans;
-    }
-}
-/* ===== MORPH ORB: REACTIVE NEON INPUT ===== */
-
-@keyframes mo-input-light-sweep {
-  0% {
-    background-position: 180% 50%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 72px;
+    -webkit-text-size-adjust: 100%;
   }
-  100% {
-    background-position: -180% 50%;
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    overflow-x: hidden;
+    font-feature-settings: "ss01", "cv11";
   }
-}
-
-@keyframes mo-input-glow-pulse {
-  0%, 100% {
-    opacity: 0.22;
-    transform: scale(0.995);
+  ::selection {
+    background: var(--primary);
+    color: #000;
   }
-  50% {
-    opacity: 0.52;
-    transform: scale(1.012);
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(225, 224, 204, 0.2) transparent;
+  }
+  :focus-visible {
+    outline-color: var(--ring);
   }
 }
 
-/* Keep the component layout and add a subtle neon edge */
-.mo-input {
-  isolation: isolate;
-  overflow: visible;
-  border: 1px solid rgba(103, 232, 249, 0.3);
-  box-shadow:
-    0 0 0 1px rgba(96, 165, 250, 0.08),
-    0 8px 32px rgba(59, 130, 246, 0.12);
-  transition:
-    border-color 250ms ease,
-    box-shadow 250ms ease,
-    filter 250ms ease;
+/* Film grain for the hero (and anything else that wants it). */
+.noise-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
 }
 
-/* Animated coloured light travels around the bar's edge */
-.mo-input::before {
-  content: "";
+/* ── liquid-metal glass buttons (components/ui/liquid-button.tsx) ── */
+@property --liquid-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes liquid-spin { to { --liquid-angle: 360deg; } }
+@keyframes liquid-flow {
+  0% { background-position: 0% 40%; }
+  50% { background-position: 100% 60%; }
+  100% { background-position: 0% 40%; }
+}
+@keyframes liquid-sheen {
+  from { transform: translateX(0) skewX(-20deg); }
+  to { transform: translateX(520%) skewX(-20deg); }
+}
+.liquid-rim {
+  background: conic-gradient(from var(--liquid-angle), #ffffff, #8d8c80 12%, #f6f5e8 25%, #3e3d38 38%, #e1e0cc 52%, #a5a496 66%, #ffffff 80%, #5d5c54 90%, #ffffff);
+  animation: liquid-spin 5s linear infinite;
+}
+.liquid-metal {
+  background:
+    radial-gradient(60% 80% at 30% 30%, rgba(255, 255, 255, 0.9), transparent 60%),
+    linear-gradient(105deg, #fbfaf0 0%, #6d6c62 9%, #f2f1e2 17%, #ffffff 24%, #4b4a43 33%, #c9c8b6 41%, #fffff8 50%, #8b8a7c 59%, #3f3e38 66%, #e6e5d2 75%, #ffffff 83%, #77766a 92%, #f5f4e6 100%);
+  background-size: 100% 100%, 220% 100%;
+  filter: url(#liquid-metal) contrast(1.08);
+  animation: liquid-flow 9s ease-in-out infinite;
+}
+.liquid-metal-dark {
+  background:
+    radial-gradient(60% 80% at 30% 30%, rgba(225, 224, 204, 0.35), transparent 60%),
+    linear-gradient(115deg, #0b0b0a 0%, #3c3b36 14%, #8b8a7d 24%, #151513 38%, #4e4d46 52%, #0e0e0d 64%, #a09f90 76%, #262622 88%, #0b0b0a 100%);
+  background-size: 100% 100%, 260% 100%;
+}
+.liquid-gloss {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.12) 42%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.06) 70%, rgba(255, 255, 255, 0.2) 100%);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.95), inset 0 -4px 10px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+.liquid-gloss-dark {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.04) 48%, rgba(255, 255, 255, 0) 52%, rgba(255, 255, 255, 0.12) 100%);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.45), inset 0 -3px 8px rgba(0, 0, 0, 0.6);
+  mix-blend-mode: screen;
+}
+.liquid-sheen {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
+  opacity: 0;
+  transform: skewX(-20deg);
+}
+.liquid-btn:hover .liquid-sheen,
+.liquid-btn:focus-visible .liquid-sheen {
+  opacity: 1;
+  animation: liquid-sheen 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.liquid-text { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6); }
+.liquid-text-dark { text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7); }
+.liquid-glow {
+  box-shadow: 0 10px 30px -10px rgba(225, 224, 204, 0.45), 0 2px 6px -2px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.5s var(--ease-prisma);
+}
+.liquid-glow:hover { box-shadow: 0 14px 44px -10px rgba(225, 224, 204, 0.7), 0 2px 6px -2px rgba(0, 0, 0, 0.6); }
+.liquid-glow-dark { box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.6); }
+
+/* ── Liquid Glass (components/ui/liquid-glass.tsx) ── */
+@property --la {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: -45deg;
+}
+.liquid-glass {
+  position: relative;
+  border-radius: 999px;
+  box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.6), 0 2px 8px -2px rgba(0, 0, 0, 0.4);
+  transition: --la 0.4s var(--ease-prisma);
+}
+.liquid-glass-fill,
+.liquid-glass-glare,
+.liquid-glass-rim {
   position: absolute;
-  inset: -2px;
+  inset: 0;
   border-radius: inherit;
-  padding: 2px;
   pointer-events: none;
-  z-index: 0;
-
-  background: linear-gradient(
-    110deg,
-    transparent 5%,
-    #22d3ee 22%,
-    #60a5fa 38%,
-    #a78bfa 52%,
-    #f0abfc 65%,
-    #38bdf8 80%,
-    transparent 96%
-  );
-
-  background-size: 300% 100%;
-  animation: mo-input-light-sweep 4s linear infinite;
-  opacity: 0.7;
-
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
+}
+/* the frosted body: the page blurred and brightened, a thin smoked tint over it,
+   lit from above and with a faint glow inside the edge */
+.liquid-glass-fill {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02) 55%, rgba(255, 255, 255, 0.05)),
+    rgba(12, 12, 11, 0.36);
+  -webkit-backdrop-filter: blur(12px) saturate(180%) brightness(1.06);
+  backdrop-filter: blur(12px) saturate(180%) brightness(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 0 16px rgba(255, 255, 255, 0.06);
+}
+.liquid-glass-glare {
+  background: radial-gradient(90px 48px at var(--lx, 50%) var(--ly, 0%), rgba(255, 255, 255, 0.16), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-prisma);
+}
+.liquid-glass:hover .liquid-glass-glare { opacity: 1; }
+/* a 1px rim, brightest where the light (the cursor) falls, with a weaker
+   reflection on the far side */
+.liquid-glass-rim {
+  padding: 1px;
+  background: linear-gradient(var(--la), rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.06) 30%, rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.7));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
+/* the droplet on the current link, and the small chip for ⌘K */
+.liquid-lens {
+  background: linear-gradient(180deg, rgba(225, 224, 204, 0.22), rgba(225, 224, 204, 0.07) 60%, rgba(225, 224, 204, 0.12));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.liquid-chip {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+@media (prefers-reduced-transparency: reduce) {
+  .liquid-glass-fill {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none !important;
+    background: var(--card);
+  }
+}
 
-/* Soft coloured aura behind the typing bar */
-.mo-input::after {
+/* halftone corner on the works-wheel covers, the same dot field as the footer */
+.cover-dots {
+  background-image: radial-gradient(circle, rgba(225, 224, 204, 0.2) 0.9px, transparent 1.4px);
+  background-size: 7px 7px;
+  -webkit-mask-image: radial-gradient(70% 90% at 100% 0%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(70% 90% at 100% 0%, #000 0%, transparent 70%);
+}
+
+/* endless skills ticker */
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+
+@keyframes ping-soft {
+  75%, 100% { transform: scale(2.2); opacity: 0; }
+}
+.ping-soft {
+  animation: ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* terminal output (built from escaped strings, like the old shell) */
+.term pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font: inherit;
+}
+.term a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(225, 224, 204, 0.35); }
+.term a:hover { text-decoration-color: var(--primary); }
+.term .c-accent { color: var(--primary); font-weight: 500; }
+.term .c-violet, .term .c-muted { color: rgba(225, 224, 204, 0.5); }
+.term .cmd { color: var(--primary); }
+.term .err { color: var(--ember); }
+
+/* ── Booglu's thinking orb (components/ui/ai-thiking-orb-and-input.tsx) ──
+   The runtime writes geometry and opacities as custom properties on .mo-actor
+   (--w --h --r and the --o* fades), .mo-status (--sOp --sTy) and .mo-root
+   (--oCenter --cardH); these rules turn them into the pill, the flying ball,
+   the orb, the ember dot and the answer card. Same black, cream and ember as
+   the rest of the site. */
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes mo-spin { to { --angle: 360deg; } }
+@keyframes mo-drift { from { transform: translateX(-14%); } to { transform: translateX(14%); } }
+@keyframes mo-shimmer { from { background-position: 150% 0; } to { background-position: -100% 0; } }
+@keyframes mo-dot { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+@keyframes mo-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes mo-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-6px); } }
+@keyframes mo-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes mo-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes mo-shake {
+  0%, 100% { transform: translate(-50%, -50%); }
+  25% { transform: translate(calc(-50% - 4px), -50%); }
+  75% { transform: translate(calc(-50% + 4px), -50%); }
+}
+
+.mo-root {
+  --oCenter: 0;
+  --cardH: 108px;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  color: var(--primary);
+  font-family: var(--font-sans);
+}
+.mo-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 80% at 50% 46%, rgba(12, 12, 11, 0.86) 0%, rgba(0, 0, 0, 0.94) 70%);
+}
+.mo-halo {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 560px;
+  height: 560px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(225, 224, 204, 0.1), transparent);
+  opacity: var(--oCenter);
+  pointer-events: none;
+}
+
+/* idle: greeting and suggested questions where the orb will appear */
+.mo-intro {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: min(560px, calc(100vw - 32px));
+  translate: -50% -50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+  transition: opacity 0.35s var(--ease-prisma), transform 0.35s var(--ease-prisma);
+}
+.mo-root:not([data-phase="idle"]) .mo-intro { opacity: 0; transform: translateY(-10px); pointer-events: none; }
+.mo-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.mo-chip {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: rgba(225, 224, 204, 0.72);
+  background: rgba(225, 224, 204, 0.03);
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+.mo-chip:hover, .mo-chip:focus-visible { background: var(--primary); color: #000; border-color: var(--primary); outline: none; }
+
+.mo-mover { position: absolute; left: 50%; top: 46%; width: 0; height: 0; will-change: transform; }
+.mo-trail {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 38% 32%, rgba(244, 243, 230, 0.9), rgba(225, 224, 204, 0.18) 58%, transparent 70%);
+}
+.mo-actor {
+  --w: 560px;
+  --h: 60px;
+  --r: 999px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--w);
+  height: var(--h);
+  border-radius: var(--r);
+  transform: translate(-50%, -50%);
+}
+.mo-actor[data-shake] { animation: mo-shake 0.26s ease; }
+.mo-actor > * { border-radius: inherit; }
+
+.mo-underglow {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: -22px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(225, 224, 204, 0.16);
+  filter: blur(22px);
+  opacity: var(--oGlow, 1);
+  pointer-events: none;
+}
+.mo-halo-green {
+  position: absolute;
+  inset: -55%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(240, 163, 107, 0.4), transparent);
+  opacity: var(--oHalo, 0);
+  pointer-events: none;
+}
+.mo-surface {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid rgba(225, 224, 204, 0.14);
+  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.9);
+  opacity: var(--oPill, 1);
+  transition: border-color 0.2s;
+}
+.mo-actor[data-flash] .mo-surface { border-color: var(--ember); }
+.mo-aurora {
+  position: absolute;
+  inset: -60% -15%;
+  opacity: calc(var(--oAur, 1) * 0.55);
+  filter: blur(20px);
+  animation: mo-drift 7s ease-in-out infinite alternate;
+}
+.mo-aurora i { position: absolute; width: 40%; height: 100%; border-radius: 50%; }
+.mo-aurora i:nth-child(1) { left: 0; background: radial-gradient(closest-side, rgba(225, 224, 204, 0.18), transparent); }
+.mo-aurora i:nth-child(2) { left: 22%; background: radial-gradient(closest-side, rgba(240, 163, 107, 0.16), transparent); }
+.mo-aurora i:nth-child(3) { left: 46%; background: radial-gradient(closest-side, rgba(225, 224, 204, 0.12), transparent); }
+.mo-aurora i:nth-child(4) { left: 66%; background: radial-gradient(closest-side, rgba(240, 163, 107, 0.12), transparent); }
+.mo-ball {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 36% 30%, #f6f5e9, #e1e0cc 42%, #6f6e64 100%);
+  box-shadow: 0 0 44px rgba(225, 224, 204, 0.32);
+  opacity: var(--oBall, 0);
+}
+.mo-green {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 36% 30%, #ffd9bb, var(--ember) 55%, #b9663a 100%);
+  box-shadow: 0 0 40px rgba(240, 163, 107, 0.55);
+  transform: scale(var(--gs, 0.55));
+  opacity: var(--oGreen, 0);
+}
+.mo-card {
+  position: absolute;
+  inset: 0;
+  background: var(--card);
+  border: 1px solid rgba(225, 224, 204, 0.16);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.95);
+  transform: scale(var(--cs, 1));
+  opacity: var(--oCard, 0);
+}
+.mo-card::after {
   content: "";
   position: absolute;
-  inset: -7px;
+  inset: -1px;
   border-radius: inherit;
+  box-shadow: 0 0 60px rgba(240, 163, 107, 0.22);
+  opacity: calc((var(--bloom, 1) - 0.625) / 0.375);
+}
+.mo-ring {
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  background: conic-gradient(from var(--angle), transparent 0 58%, rgba(225, 224, 204, 0.55) 74%, rgba(240, 163, 107, 0.75) 86%, transparent 96%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: var(--oRing, 1);
+  animation: mo-spin 4.5s linear infinite;
   pointer-events: none;
-  z-index: -1;
-
-  background: linear-gradient(
-    100deg,
-    #22d3ee,
-    #6366f1,
-    #d946ef,
-    #38bdf8
-  );
-
-  background-size: 300% 100%;
-  animation:
-    mo-input-light-sweep 6s linear infinite,
-    mo-input-glow-pulse 3s ease-in-out infinite;
-
-  filter: blur(15px);
-  opacity: 0.3;
 }
-
-/* Keep the input, icon and send button above the lighting */
-.mo-input > * {
-  z-index: 1;
-}
-
-/* Lights intensify on mouse hover */
-.mo-input:hover::before {
-  opacity: 0.95;
-  animation-duration: 2s;
-}
-
-.mo-input:hover::after {
-  opacity: 0.55;
-}
-
-/* Stronger glow when the typing bar has focus */
-.mo-input:focus-within {
-  border-color: rgba(103, 232, 249, 0.75);
-  box-shadow:
-    0 0 0 1px rgba(34, 211, 238, 0.18),
-    0 0 22px rgba(34, 211, 238, 0.18),
-    0 0 42px rgba(99, 102, 241, 0.16);
-}
-
-.mo-input:focus-within::before {
-  opacity: 1;
-  animation-duration: 1.5s;
-}
-
-.mo-input:focus-within::after {
-  opacity: 0.7;
-  filter: blur(19px);
-}
-
-.mo-input:focus-within .mo-field {
-  caret-color: #67e8f9;
-}
-
-/* React to actual typing: accelerate the light sweep */
-.mo-actor[data-typing] .mo-input::before {
-  opacity: 1;
-  animation-duration: 0.85s;
-}
-
-.mo-actor[data-typing] .mo-input::after {
-  opacity: 0.8;
-}
-
-/* Make the send icon glow when text is ready */
-.mo-input .mo-send[data-ready] {
-  filter: drop-shadow(0 0 7px rgba(34, 211, 238, 0.7));
-  transition: filter 200ms ease;
-}
-
-.mo-input .mo-send[data-ready]:hover {
-  filter: drop-shadow(0 0 12px rgba(167, 139, 250, 0.95));
-}
-
-/* Respect reduced-motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  .mo-input::before,
-  .mo-input::after {
-    animation: none;
-  }
-}
-
-/* FIX: Make typed text clearly visible */
-.mo-input .mo-field {
-  position: relative !important;
-  z-index: 5 !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  caret-color: #67e8f9 !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  background: transparent !important;
-  font-size: 16px !important;
-}
-
-.mo-input .mo-field::placeholder {
-  color: rgba(220, 230, 255, 0.65) !important;
-  -webkit-text-fill-color: rgba(220, 230, 255, 0.65) !important;
-  opacity: 1 !important;
-}
-
-/* Keep the input above the animated neon border */
-.mo-input .mo-send {
-  position: relative;
-  z-index: 5 !important;
-}
-
-/* Remove the Gemini-like sparkle logo */
-.mo-input .mo-spark {
-  display: none !important;
-}
-
-/* ===== FIXED BOTTOM CHATBOT ===== */
-
-.mo-mover {
-  position: fixed !important;
-  top: auto !important;
-  bottom: 70px !important;
-  left: 50% !important;
-  right: auto !important;
-
-  /* Prevent JavaScript from moving the chatbot */
-  transform: translateX(-50%) !important;
-
-  width: min(560px, calc(100vw - 24px)) !important;
-  max-width: calc(100vw - 24px) !important;
-  margin: 0 !important;
-  box-sizing: border-box !important;
-}
-
-/* Keep the component within the screen */
-.mo-root {
-  width: 100%;
-  max-width: 100vw;
-  box-sizing: border-box;
-}
-
-/* Make the animated input fit its container */
-.mo-actor {
-  max-width: calc(100vw - 24px) !important;
-  box-sizing: border-box !important;
-}
+.mo-actor[data-typing] .mo-ring { animation-duration: 1.4s; }
 
 .mo-input {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
-  box-sizing: border-box !important;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 0 20px;
+  opacity: var(--oInput, 1);
+  transform: scale(var(--inScale, 1));
+}
+.mo-spark { width: 18px; height: 18px; flex: none; color: rgba(225, 224, 204, 0.55); }
+.mo-field {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  font-size: 15px;
+  outline: none;
+}
+.mo-field::placeholder { color: rgba(225, 224, 204, 0.38); }
+.mo-send {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 50%;
+  background: rgba(225, 224, 204, 0.08);
+  color: rgba(225, 224, 204, 0.5);
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, transform 0.25s;
+}
+.mo-send svg { width: 18px; height: 18px; }
+.mo-send[data-ready] { background: var(--primary); color: #000; }
+.mo-send[data-ready]:hover { transform: scale(1.06); }
+.mo-send:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.mo-orb { position: absolute; left: 50%; top: 50%; width: 220px; height: 220px; margin: -110px 0 0 -110px; pointer-events: none; }
+.mo-pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 132px;
+  height: 132px;
+  margin: -66px 0 0 -66px;
+  border-radius: 50%;
+  border: 1px solid var(--ember);
+  opacity: 0;
+  pointer-events: none;
 }
 
-/* Prevent the text field from overflowing */
-.mo-input .mo-field {
-  flex: 1 1 auto !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
+/* the question rides just above whatever the actor is: orb, dot or card */
+.mo-q {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 18px);
+  width: max-content;
+  max-width: min(460px, calc(100vw - 48px));
+  translate: -50% 0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.3;
+  text-align: center;
+  color: rgba(225, 224, 204, 0.5);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-prisma);
+  pointer-events: none;
 }
+.mo-root:is([data-phase="think"], [data-phase="resolve"], [data-phase="condense"], [data-phase="unfold"], [data-phase="answered"]) .mo-q { opacity: 1; }
 
-/* Keep the send button inside the input bar */
-.mo-input .mo-send {
-  flex: 0 0 40px;
-  min-width: 40px;
-  box-sizing: border-box;
-}
-
-/* Adjust spacing on narrow screens */
-@media (max-width: 480px) {
-  .mo-mover {
-    width: calc(100vw - 24px) !important;
-    max-width: calc(100vw - 24px) !important;
-    bottom: 64px !important;
-  }
-
-  .mo-actor {
-    max-width: calc(100vw - 24px) !important;
-  }
-
-  .mo-input .mo-field {
-    font-size: 15px !important;
-  }
-}
-
-/* Remove unwanted demo labels and placeholder messages */
-.mo-status,
-.mo-reset,
-.mo-live,
 .mo-answer {
-  display: none !important;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  text-align: left;
+  opacity: var(--oCard, 0);
+  outline: none;
+  pointer-events: none;
+  scrollbar-width: thin;
 }
-
-/* Keep the chatbot interface clean */
-.mo-root {
+.mo-root[data-phase="answered"] .mo-answer { pointer-events: auto; }
+.mo-a-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(225, 224, 204, 0.5);
+  opacity: var(--hOp, 0);
+}
+.mo-a-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ember); transform: scale(var(--dotS, 0)); }
+.mo-a-body { margin: 0; font-size: 15px; line-height: 1.45; color: rgba(225, 224, 204, 0.9); }
+.mo-w { display: inline-block; opacity: 0; }
+.mo-measure {
+  inset: auto;
+  left: 0;
+  top: 0;
+  height: auto;
   overflow: visible;
+  visibility: hidden;
+  opacity: 0;
+}
+.mo-measure .mo-a-body { white-space: pre-line; }
+
+.mo-status {
+  position: absolute;
+  left: 50%;
+  top: calc(46% + 100px);
+  width: 260px;
+  height: 22px;
+  transform: translate(-50%, calc(var(--sTy, 6) * 1px));
+  opacity: var(--sOp, 0);
+  font-size: 13px;
+  color: rgba(225, 224, 204, 0.72);
+  pointer-events: none;
+}
+.mo-lab { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 2px; }
+.mo-in { animation: mo-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.mo-out { animation: mo-out 0.3s ease both; }
+.mo-lab-t {
+  background: linear-gradient(90deg, rgba(225, 224, 204, 0.4) 0%, #f2f1e4 45%, rgba(225, 224, 204, 0.4) 90%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: mo-shimmer 1.6s linear infinite;
+}
+.mo-dots { display: inline-flex; gap: 3px; margin-left: 3px; }
+.mo-dots i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; animation: mo-dot 1.2s infinite; }
+.mo-dots i:nth-child(2) { animation-delay: 0.15s; }
+.mo-dots i:nth-child(3) { animation-delay: 0.3s; }
+.mo-lab-done { color: var(--ember); }
+
+.mo-reset {
+  position: absolute;
+  left: 50%;
+  top: calc(46% + var(--cardH) / 2 + 22px);
+  translate: -50% 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 13px;
+  color: rgba(225, 224, 204, 0.78);
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease-prisma), background 0.25s, color 0.25s;
+}
+.mo-root[data-phase="answered"] .mo-reset { opacity: 1; pointer-events: auto; }
+.mo-reset:hover, .mo-reset:focus-visible { background: var(--primary); color: #000; outline: none; }
+.mo-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.mo-debug {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 12px var(--font-mono);
+  color: rgba(225, 224, 204, 0.7);
 }
 
-.mo-mover {
-  pointer-events: auto;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee-track, .ping-soft, .liquid-rim, .liquid-metal { animation: none; }
+  .liquid-btn:hover .liquid-sheen { animation: none; opacity: 0; }
+  .mo-ring, .mo-aurora, .mo-lab-t, .mo-dots i { animation: none; }
 }
 
-/* Hide any accidental text-selection highlighting */
-::selection {
-  background: rgba(34, 211, 238, 0.25);
-  color: #ffffff;
-}
-
-/* FIX: Keep the chatbot input perfectly sharp */
-.mo-input {
-  filter: none !important;
-  opacity: 1 !important;
-  backdrop-filter: none !important;
-}
-
-.mo-input .mo-field {
-  filter: none !important;
-  opacity: 1 !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  text-shadow: none !important;
-  backdrop-filter: none !important;
-}
-
-.mo-input .mo-field::placeholder {
-  color: rgba(220, 230, 255, 0.75) !important;
-  -webkit-text-fill-color: rgba(220, 230, 255, 0.75) !important;
-  opacity: 1 !important;
-}
-
-/* Keep the colourful glow outside the input, not over its text */
-.mo-input::after {
-  pointer-events: none !important;
-}
-
-/* Keep the input above decorative effects */
-.mo-input .mo-field,
-.mo-input .mo-send {
-  position: relative;
-  z-index: 5 !important;
-}
-
-/* ===== COMPACT, CLICKABLE CHAT INPUT ===== */
-
-.mo-mover {
-  position: fixed !important;
-  top: auto !important;
-  bottom: 24px !important;
-  left: 50% !important;
-  right: auto !important;
-  transform: translateX(-50%) !important;
-
-  width: min(430px, calc(100vw - 24px)) !important;
-  max-width: calc(100vw - 24px) !important;
-}
-
+/* Original Morph Orb positioning fix */
 .mo-actor {
-  width: min(430px, calc(100vw - 24px)) !important;
-  max-width: calc(100vw - 24px) !important;
-  box-sizing: border-box !important;
+  position: absolute;
 }
 
-/* Keep the input and its text interactive */
+
+/* Restore original Morph Orb input containment */
+.mo-actor {
+  position: absolute !important;
+}
+
 .mo-input {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
-  box-sizing: border-box !important;
-  pointer-events: auto !important;
-  filter: none !important;
+  position: absolute !important;
+  inset: 0 !important;
 }
 
-.mo-input .mo-field {
-  flex: 1 1 auto !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  pointer-events: auto !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  caret-color: #67e8f9 !important;
-  filter: none !important;
-}
-
-.mo-input .mo-send {
-  flex: 0 0 36px !important;
-  min-width: 36px !important;
-  pointer-events: auto !important;
-}
-
-/* Decorative layers must not intercept clicks */
-.mo-input::before,
-.mo-input::after,
-.mo-bg,
-.mo-halo {
-  pointer-events: none !important;
-}
-
-@media (max-width: 480px) {
-  .mo-mover,
-  .mo-actor {
-    width: calc(100vw - 24px) !important;
-    max-width: calc(100vw - 24px) !important;
-  }
-}
-/* Aurora Background animation — Tailwind CSS v4 */
-
-@theme inline {
-  --animate-aurora: aurora 60s linear infinite;
-
-  @keyframes aurora {
-    from {
-      background-position:
-        50% 50%,
-        50% 50%;
-    }
-
-    to {
-      background-position:
-        350% 50%,
-        350% 50%;
-    }
-  }
-}

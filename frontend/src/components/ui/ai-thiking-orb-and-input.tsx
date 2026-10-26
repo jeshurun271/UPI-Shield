@@ -1,10 +1,10 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import "../index.css";
-import "./morph-orb-fixed.css";
+﻿import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import "../../index.css";
 
-/* ───────────────────────────── copy ───────────────────────────── */
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ copy â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const COPY = {
-  placeholder: "Ask anything…",
+  placeholder: "Ask anything...",
   labels: ["Thinking", "Searching", "Analyzing", "Composing"],
   done: "Done",
   answerTitle: "Answer",
@@ -12,7 +12,6 @@ const COPY = {
   reset: "New question",
   send: "Send",
 };
-
 type Phase =
   | "idle"
   | "launch"
@@ -30,20 +29,20 @@ export interface MorphOrbProps {
   speed?: number;
 }
 
-/* ─────────────────────────── geometry ─────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ geometry â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const PILL_H = 60;
 const BALL_SMALL = 60;
 const ORB_D = 132;
 const ORB_R = 66;
 const CANVAS = 220;
-const CARD_H = 108;
+const CARD_H = 180;
 const FLY_D = 138;
 
 const pillW = () => Math.min(560, window.innerWidth - 32);
-const cardW = () => Math.min(320, window.innerWidth - 32);
+const cardW = () => Math.min(520, window.innerWidth - 32);
 const homeDy = () => window.innerHeight * 0.54 - 96;
 
-/* ───────────────────────── math + easing ───────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ math + easing â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 type Ease = (t: number) => number;
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
@@ -138,7 +137,7 @@ const bez = (
   2 * (1 - t) * t * c +
   t * t * p2;
 
-/* ───────────────────────── timeline data ───────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ timeline data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 interface Track {
   ch: string;
   from: number;
@@ -332,7 +331,7 @@ const INIT: Record<string, number> = {
   "orb.rad": 0,
 };
 
-/* ─────────────────────────── async utils ─────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ async utils â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const ABORT = Symbol("abort");
 
 function sleep(ms: number, sig: AbortSignal) {
@@ -376,7 +375,7 @@ function abortable<V>(p: Promise<V>, sig: AbortSignal) {
   });
 }
 
-/* ───────────────────────────── dotted orb ───────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ dotted orb â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const RINGS = 16;
 
 const DOT_LIST = (() => {
@@ -758,7 +757,7 @@ function createOrb(
   return { P, ensure, reset, destroy };
 }
 
-/* ───────────────────────────── runtime ───────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ runtime â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 interface UI {
   setPhase(p: Phase): void;
   swapLabel(name: string): void;
@@ -910,7 +909,7 @@ function createRuntime(env: Env): Runtime {
     return ac;
   };
 
-  /* ── flight path + comet trail ── */
+  /* â”€â”€ flight path + comet trail â”€â”€ */
   const renderTrail = () => {
     if (trailVis <= 0.001) {
       if (ghostsShown) {
@@ -972,7 +971,7 @@ function createRuntime(env: Env): Runtime {
     renderTrail();
   };
 
-  /* ── answer words ── */
+  /* â”€â”€ answer words â”€â”€ */
   const applyWords = (v: number) => {
     const body = env.getBody();
 
@@ -1002,7 +1001,7 @@ function createRuntime(env: Env): Runtime {
     });
   };
 
-  /* ── channels ── */
+  /* â”€â”€ channels â”€â”€ */
   [
     "oGlow",
     "oHalo",
@@ -1100,7 +1099,7 @@ function createRuntime(env: Env): Runtime {
     }
   };
 
-  /* ── timeline engine ── */
+  /* â”€â”€ timeline engine â”€â”€ */
   const play = (tracks: Track[], sig: AbortSignal) =>
     new Promise<void>((res) => {
       if (sig.aborted) return res();
@@ -1161,7 +1160,7 @@ function createRuntime(env: Env): Runtime {
       raf = requestAnimationFrame(step);
     });
 
-  /* ── thinking labels ── */
+  /* â”€â”€ thinking labels â”€â”€ */
   const labelLoop = async (
     sig: AbortSignal,
     ctl: { stop: boolean }
@@ -1179,7 +1178,7 @@ function createRuntime(env: Env): Runtime {
     }
   };
 
-  /* ── orchestrator ── */
+  /* â”€â”€ orchestrator â”€â”€ */
   const run = async (
     text: string,
     sig: AbortSignal,
@@ -1317,7 +1316,7 @@ function createRuntime(env: Env): Runtime {
     }
   };
 
-  /* ── return to the idle pill ── */
+  /* â”€â”€ return to the idle pill â”€â”€ */
   const toIdle = async (kind: "reset" | "esc") => {
     if (idling) return;
 
@@ -1493,7 +1492,7 @@ function createRuntime(env: Env): Runtime {
   };
 }
 
-/* ───────────────────────────── component ───────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const useIsoLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -1691,7 +1690,7 @@ export default function MorphOrb(props: MorphOrbProps) {
 
     const timer = window.setTimeout(() => {
       rtRef.current?.reset();
-    }, 900);
+    }, 6000);
 
     return () => window.clearTimeout(timer);
   }, [phase]);
@@ -1831,9 +1830,17 @@ export default function MorphOrb(props: MorphOrbProps) {
       data-phase={phase}
       ref={rootRef}
     >
-      <div className="mo-bg" aria-hidden="true" />
-      <div className="mo-halo" aria-hidden="true" />
+     <div
+  className="mo-bg"
+  aria-hidden="true"
+  style={{ display: "none" }}
+/>
 
+<div
+  className="mo-halo"
+  aria-hidden="true"
+  style={{ display: "none" }}
+/>
       {/* The moving orb animation layer */}
       <div className="mo-mover" ref={moverRef}>
         {Array.from({ length: 6 }).map((_, i) => (
@@ -1984,7 +1991,7 @@ export default function MorphOrb(props: MorphOrbProps) {
           <span className="mo-chip">{phase}</span>
 
           <label>
-            <span>{dbgSpeed.toFixed(2)}×</span>
+            <span>{dbgSpeed.toFixed(2)}Ã—</span>
 
             <input
               type="range"
@@ -2007,3 +2014,9 @@ export default function MorphOrb(props: MorphOrbProps) {
     </div>
   );
 }
+
+
+
+
+
+
