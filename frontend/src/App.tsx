@@ -1,6 +1,6 @@
-ï»¿import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
-
+import OptimizedTiltCard from "./components/ui/optimized-tilt-card";
 import {
   AlertTriangle,
   BookOpen,
@@ -33,7 +33,7 @@ const API_URL = "/api/chat";
 const STARTER_MESSAGE: ChatMessage = {
   role: "model",
   text:
-    "Hi! I'm UPI Shield. I can help you check suspicious UPI messages, payment requests, OTP requests and possible scams.\n\nJust tell me what happened â€” don't share any real OTP, UPI PIN, password or bank details.",
+    "Hi! I'm UPI Shield. I can help you check suspicious UPI messages, payment requests, OTP requests and possible scams.\n\nJust tell me what happened — don't share any real OTP, UPI PIN, password or bank details.",
 };
 
 const QUIZ_QUESTIONS = [
@@ -91,7 +91,7 @@ const QUIZ_QUESTIONS = [
   },
   {
     question:
-      "You receive a message saying you have won a â‚¹50,000 cashback prize and must pay â‚¹500 to claim it. What is this?",
+      "You receive a message saying you have won a ?50,000 cashback prize and must pay ?500 to claim it. What is this?",
     options: [
       "A normal cashback process",
       "A likely scam",
@@ -130,7 +130,7 @@ const QUIZ_QUESTIONS = [
   },
   {
     question:
-      "You get an SMS saying your parcel is stuck and asks you to pay â‚¹20 using an unfamiliar link. What should you do?",
+      "You get an SMS saying your parcel is stuck and asks you to pay ?20 using an unfamiliar link. What should you do?",
     options: [
       "Click the link",
       "Pay quickly",
@@ -143,7 +143,7 @@ const QUIZ_QUESTIONS = [
   },
   {
     question:
-      "A person says they accidentally sent â‚¹5,000 to your UPI account and asks you to send it back to another number. What should you do?",
+      "A person says they accidentally sent ?5,000 to your UPI account and asks you to send it back to another number. What should you do?",
     options: [
       "Send it immediately",
       "Verify the transaction in your bank app first",
@@ -1083,7 +1083,7 @@ function App() {
           </div>
 
           <div className="mt-5 text-center text-xs uppercase tracking-[0.2em] text-white/40">
-            PIN & OTP Â· Suspicious Links Â· Payment Requests Â· Fake KYC Â·
+            PIN & OTP · Suspicious Links · Payment Requests · Fake KYC ·
             Report Fraud
           </div>
 
@@ -1257,7 +1257,7 @@ function App() {
                     icon={
                       <Gift size={22} />
                     }
-                    text="Congratulations! You won â‚¹10,000 cashback. Click the link to claim."
+                    text="Congratulations! You won ?10,000 cashback. Click the link to claim."
                   />
 
                   <ScamMessage
@@ -1279,7 +1279,7 @@ function App() {
                       <div>
 
                         <p className="font-black">
-                          â‚¹2,500 received
+                          ?2,500 received
                         </p>
 
                         <p className="text-sm font-semibold">
@@ -1487,7 +1487,7 @@ function App() {
                 </span>
 
                 <span>
-                  â€¢
+                  •
                 </span>
 
                 <span>
@@ -1495,7 +1495,7 @@ function App() {
                 </span>
 
                 <span>
-                  â€¢
+                  •
                 </span>
 
                 <span>
@@ -1503,7 +1503,7 @@ function App() {
                 </span>
 
                 <span>
-                  â€¢
+                  •
                 </span>
 
                 <span>
@@ -1597,8 +1597,7 @@ function SafetyCard({
   text: string;
 }) {
   return (
-    <div className="rounded-3xl border border-border bg-muted/20 p-6">
-
+    <OptimizedTiltCard className="rounded-3xl border border-border bg-muted/20 p-6">
       <ShieldCheck size={24} />
 
       <h3 className="mt-5 text-xl font-semibold">
@@ -1608,11 +1607,9 @@ function SafetyCard({
       <p className="mt-2 text-sm leading-6 text-muted-foreground">
         {text}
       </p>
-
-    </div>
+    </OptimizedTiltCard>
   );
-}
-
+} 
 function ScamMessage({
   icon,
   text,
