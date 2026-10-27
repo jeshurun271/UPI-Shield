@@ -28,7 +28,7 @@ type ChatMessage = {
   text: string;
 };
 
-const API_URL = "http://127.0.0.1:3000/api/chat";
+const API_URL = "/api/chat";
 
 const STARTER_MESSAGE: ChatMessage = {
   role: "model",
@@ -329,6 +329,74 @@ function App() {
     };
   }, []);
 
+  /*
+   * =========================================================
+   * FADE WELCOME WHEN MORPHORB INPUT IS USED
+   * =========================================================
+   */
+
+  useEffect(() => {
+    const attachToMorphInput = () => {
+      const field =
+        document.querySelector<HTMLInputElement>(".mo-field");
+
+      if (!field) {
+        return;
+      }
+
+      const fadeWelcome = () => {
+        setWelcomeOpacity(0);
+      };
+
+      field.addEventListener("focus", fadeWelcome);
+      field.addEventListener("input", fadeWelcome);
+
+      return () => {
+        field.removeEventListener("focus", fadeWelcome);
+        field.removeEventListener("input", fadeWelcome);
+      };
+    };
+
+    const cleanup = attachToMorphInput();
+
+    return () => {
+      cleanup?.();
+    };
+  }, []);
+  /*
+   * =========================================================
+   * FADE WELCOME WHEN MORPHORB INPUT IS USED
+   * =========================================================
+   */
+
+  useEffect(() => {
+    const attachToMorphInput = () => {
+      const field =
+        document.querySelector<HTMLInputElement>(".mo-field");
+
+      if (!field) {
+        return;
+      }
+
+      const fadeWelcome = () => {
+        setWelcomeOpacity(0);
+      };
+
+      field.addEventListener("focus", fadeWelcome);
+      field.addEventListener("input", fadeWelcome);
+
+      return () => {
+        field.removeEventListener("focus", fadeWelcome);
+        field.removeEventListener("input", fadeWelcome);
+      };
+    };
+
+    const cleanup = attachToMorphInput();
+
+    return () => {
+      cleanup?.();
+    };
+  }, []);
   /*
    * =========================================================
    * PREVENT ACCIDENTAL ZOOM
@@ -1614,3 +1682,5 @@ function PosterRule({
 }
 
 export default App;
+
+
